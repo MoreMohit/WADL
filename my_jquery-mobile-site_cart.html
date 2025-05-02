@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My jQuery Mobile Store</title>
+
+  <!-- jQuery Mobile CSS & JS -->
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+  <script>
+    var cart = [];
+
+    function addToCart(itemName, itemPrice) {
+      cart.push({ name: itemName, price: itemPrice });
+      alert(itemName + " added to cart!");
+      updateCartCount();
+    }
+
+    function updateCartCount() {
+      $("#cart-count").text(cart.length);
+    }
+
+    function showCart() {
+      var cartList = $("#cart-list");
+      cartList.empty();
+
+      if (cart.length === 0) {
+        cartList.append("<li>Your cart is empty.</li>");
+      } else {
+        cart.forEach(function (item, index) {
+          cartList.append(`<li>${item.name} - $${item.price} <a href="#" onclick="removeFromCart(${index})" class="ui-btn ui-btn-inline ui-mini ui-icon-delete ui-btn-icon-right">Remove</a></li>`);
+        });
+      }
+      cartList.listview("refresh");
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      showCart();
+      updateCartCount();
+    }
+  </script>
+</head>
+<body>
+
+  <!-- Home Page -->
+  <div data-role="page" id="home">
+    <div data-role="header">
+      <h1>Home</h1>
+      <a href="#cart" class="ui-btn ui-btn-right ui-icon-shop ui-btn-icon-left">Cart (<span id="cart-count">0</span>)</a>
+    </div>
+
+    <div data-role="content" style="text-align: center;">
+        <h2>Welcome to Our Store</h2>
+        <a href="#store" class="ui-btn">Visit Store</a>
+      </div>
+      
+
+    <div data-role="footer">
+      <h4>&copy; 2025 My jQuery Mobile Store</h4>
+    </div>
+  </div>
+
+  <!-- Store Page -->
+  <div data-role="page" id="store">
+    <div data-role="header">
+      <h1>Our Products</h1>
+      <a href="#cart" class="ui-btn ui-btn-right ui-icon-shop ui-btn-icon-left">Cart (<span id="cart-count">0</span>)</a>
+    </div>
+
+    <div data-role="content">
+      <ul data-role="listview">
+        <li>
+          <h2>Product 1</h2>
+          <p>Price: $10</p>
+          <button onclick="addToCart('Product 1', 10)" class="ui-btn ui-btn-inline ui-icon-plus ui-btn-icon-left">Add to Cart</button>
+        </li>
+        <li>
+          <h2>Product 2</h2>
+          <p>Price: $20</p>
+          <button onclick="addToCart('Product 2', 20)" class="ui-btn ui-btn-inline ui-icon-plus ui-btn-icon-left">Add to Cart</button>
+        </li>
+        <li>
+          <h2>Product 3</h2>
+          <p>Price: $15</p>
+          <button onclick="addToCart('Product 3', 15)" class="ui-btn ui-btn-inline ui-icon-plus ui-btn-icon-left">Add to Cart</button>
+        </li>
+      </ul>
+    </div>
+
+    <div data-role="footer">
+      <h4>&copy; 2025 My jQuery Mobile Store</h4>
+    </div>
+  </div>
+
+  <!-- Cart Page -->
+  <div data-role="page" id="cart">
+    <div data-role="header">
+      <h1>Shopping Cart</h1>
+      <a href="#store" class="ui-btn ui-btn-left">Back to Store</a>
+    </div>
+
+    <div data-role="content">
+      <ul data-role="listview" id="cart-list"></ul>
+      <button onclick="showCart()" class="ui-btn">Refresh Cart</button>
+    </div>
+
+    <div data-role="footer">
+      <h4>&copy; 2025 My jQuery Mobile Store</h4>
+    </div>
+  </div>
+
+</body>
+</html>
