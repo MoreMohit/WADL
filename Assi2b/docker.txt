@@ -1,0 +1,26 @@
+
+✅ STEP 1: Confirm Docker is Working
+
+docker --version
+docker run hello-world
+
+✅ STEP 3: Create a Dockerfile for Your Environment
+Create a folder and add a Dockerfile:
+
+mkdir my-docker-env
+cd my-docker-env
+FROM node:18
+
+WORKDIR /app
+COPY . .
+RUN npm install
+EXPOSE 3000
+
+CMD ["node", "server.js"]
+
+✅ STEP 4: Build the Docker Image
+
+docker build -t my-node-app .
+
+✅ STEP 5: Run the Docker Container:
+docker run -d -p 3000:3000 --name node-container my-node-app
